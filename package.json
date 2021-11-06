@@ -1,0 +1,22 @@
+{
+  "name": "cryptoadz-merkle-root",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkhoury93/cryptoadz-merkle-root.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mkhoury93/cryptoadz-merkle-root/issues"
+  },
+  "homepage": "https://github.com/mkhoury93/cryptoadz-merkle-root#readme",
+  "dependencies": {
+    "merkletreejs": "^0.2.24"
+  }
+}
