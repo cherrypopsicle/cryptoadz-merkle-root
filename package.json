@@ -19,6 +19,7 @@
   "dependencies": {
     "crypto-js": "^4.1.1",
     "ethers": "^5.5.1",
+    "hardhat": "^2.6.8",
     "merkletreejs": "^0.2.24",
     "web3": "^1.6.0"
   }

@@ -31,14 +31,22 @@ const logOwners = async () => {
     }
   }
   const fs = require("fs");
-  fs.writeFile("cryptoadz-ownerz-snapshot.json", ownersBalances, (err) => {
-    if (err) throw err;
-    console.log("Data written to file");
-  });
-  fs.writeFile("cryptoadz-ownerz-balances-snapshot.json", onlyOwners, (err) => {
-    if (err) throw err;
-    console.log("Data written to file");
-  });
+  fs.writeFile(
+    "cryptoadz-ownerz-snapshot.json",
+    JSON.stringify(ownersBalances),
+    (err) => {
+      if (err) throw err;
+      console.log("Data written to file");
+    }
+  );
+  fs.writeFile(
+    "cryptoadz-ownerz-balances-snapshot.json",
+    JSON.stringify(onlyOwners),
+    (err) => {
+      if (err) throw err;
+      console.log("Data written to file");
+    }
+  );
   console.log("array length " + ownersBalances.length);
   // const leaves = owners.map((x) => SHA256(x));
   // const tree = new MerkleTree(leaves, SHA256);
