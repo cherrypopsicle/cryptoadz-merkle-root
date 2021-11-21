@@ -18,6 +18,7 @@
   "homepage": "https://github.com/mkhoury93/cryptoadz-merkle-root#readme",
   "dependencies": {
     "crypto-js": "^4.1.1",
+    "ethers": "^5.5.1",
     "merkletreejs": "^0.2.24",
     "web3": "^1.6.0"
   }
