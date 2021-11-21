@@ -31,31 +31,22 @@ const logOwners = async () => {
     }
   }
   const fs = require("fs");
-  fs.writeFile(
-    "cryptoadz-ownerz-snapshot.json",
-    JSON.stringify(ownersBalances),
-    (err) => {
-      if (err) throw err;
-      console.log("Data written to file");
-    }
-  );
-  fs.writeFile(
-    "cryptoadz-ownerz-balances-snapshot.json",
-    JSON.stringify(ownersBalances),
-    (err) => {
-      if (err) throw err;
-      console.log("Data written to file");
-    }
-  );
-  console.log(owners);
-  console.log("array length " + owners.length);
-  const leaves = owners.map((x) => SHA256(x));
-  const tree = new MerkleTree(leaves, SHA256);
-  const root = tree.getRoot().toString("hex");
-  console.log(root);
-  const leaf = SHA256("0xe0110C6EE2138Ecf9962a6f9f6Ad329cDFE1FA17");
-  const proof = tree.getProof(leaf);
-  console.log(proof);
+  fs.writeFile("cryptoadz-ownerz-snapshot.json", ownersBalances, (err) => {
+    if (err) throw err;
+    console.log("Data written to file");
+  });
+  fs.writeFile("cryptoadz-ownerz-balances-snapshot.json", onlyOwners, (err) => {
+    if (err) throw err;
+    console.log("Data written to file");
+  });
+  console.log("array length " + ownersBalances.length);
+  // const leaves = owners.map((x) => SHA256(x));
+  // const tree = new MerkleTree(leaves, SHA256);
+  // const root = tree.getRoot().toString("hex");
+  // console.log(root);
+  // const leaf = SHA256("0xe0110C6EE2138Ecf9962a6f9f6Ad329cDFE1FA17");
+  // const proof = tree.getProof(leaf);
+  // console.log(proof);
 };
 
 logOwners();
