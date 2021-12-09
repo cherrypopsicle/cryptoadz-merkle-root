@@ -15,12 +15,13 @@ retrieveMetaData = (response) => {
   //another chunk of data has been received, so append it to `str`
   response.on("data", function (chunk) {
     str += chunk;
-    console.log(chunk);
   });
 
   //the whole response has been received, so we just print it out here
   response.on("end", function () {
-    toadzMetaData.push(JSON.parse(str));
+    const obj = JSON.parse(str);
+    console.log(obj);
+    toadzMetaData.push(obj);
   });
 
   response.on("error", function (err) {
@@ -35,6 +36,8 @@ const toadzMetaData = [];
 const logOwners = async () => {
   const supply = await cryptoadzContract.methods.totalSupply().call();
   console.log(supply);
+
+  // original tokens
   for (let i = 1; i <= 6969; i++) {
     var options = {
       host: "localhost",
@@ -42,37 +45,56 @@ const logOwners = async () => {
       path: "/ipfs/QmWEFSMku6yGLQ9TQr66HjSd9kay8ZDYKbBEfjNi4pLtrr/" + i,
     };
     const owner = await cryptoadzContract.methods.ownerOf(i).call();
-    // if (onlyOwners.includes(owner)) {
-    //   const ownersIndex = onlyOwners.indexOf(owner);
-    //   ownersBalances[ownersIndex].tokenIds.push(i);
-    // } else {
-    //   onlyOwners.push(owner);
-    //   ownersBalances.push({ owner: owner, tokenIds: [i] });
-    // }
+    if (onlyOwners.includes(owner)) {
+      const ownersIndex = onlyOwners.indexOf(owner);
+      ownersBalances[ownersIndex].tokenIds.push(i);
+    } else {
+      onlyOwners.push(owner);
+      ownersBalances.push({ owner: owner, tokenIds: [i] });
+    }
     console.log("adding metadata");
     http.request(options, retrieveMetaData).end();
   }
-  const fs = require("fs");
 
+  // honorary members
+  for (let i = 1000000; i <= 56000000; i += 1000000) {
+    var options = {
+      host: "localhost",
+      port: 8081,
+      path: "/ipfs/QmWEFSMku6yGLQ9TQr66HjSd9kay8ZDYKbBEfjNi4pLtrr/" + i,
+    };
+    const owner = await cryptoadzContract.methods.ownerOf(i).call();
+    if (onlyOwners.includes(owner)) {
+      const ownersIndex = onlyOwners.indexOf(owner);
+      ownersBalances[ownersIndex].tokenIds.push(i);
+    } else {
+      onlyOwners.push(owner);
+      ownersBalances.push({ owner: owner, tokenIds: [i] });
+    }
+    console.log("adding metadata");
+    http.request(options, retrieveMetaData).end();
+  }
+
+  const fs = require("fs");
   // cryptoadz owners
-  // fs.writeFile(
-  //   "cryptoadz-ownerz-snapshot.json",
-  //   JSON.stringify(ownersBalances),
-  //   (err) => {
-  //     if (err) throw err;
-  //     console.log("Data written to file");
-  //   }
-  // );
+  fs.writeFile(
+    "cryptoadz-ownerz-snapshot.json",
+    JSON.stringify(onlyOwners),
+    (err) => {
+      if (err) throw err;
+      console.log("Data written to file");
+    }
+  );
 
   // // cryptoadz ownerz balances
-  // fs.writeFile(
-  //   "cryptoadz-ownerz-balances-snapshot.json",
-  //   JSON.stringify(onlyOwners),
-  //   (err) => {
-  //     if (err) throw err;
-  //     console.log("Data written to file");
-  //   }
-  // );
+  fs.writeFile(
+    "cryptoadz-ownerz-balances-snapshot.json",
+    JSON.stringify(onlyOwners),
+    (err) => {
+      if (err) throw err;
+      console.log("Data written to file");
+    }
+  );
 
   // cryptoadz metadata
   fs.writeFile(
@@ -85,13 +107,6 @@ const logOwners = async () => {
   );
 
   console.log("array length " + ownersBalances.length);
-  // const leaves = owners.map((x) => SHA256(x));
-  // const tree = new MerkleTree(leaves, SHA256);
-  // const root = tree.getRoot().toString("hex");
-  // console.log(root);
-  // const leaf = SHA256("0xe0110C6EE2138Ecf9962a6f9f6Ad329cDFE1FA17");
-  // const proof = tree.getProof(leaf);
-  // console.log(proof);
 };
 
 logOwners();
