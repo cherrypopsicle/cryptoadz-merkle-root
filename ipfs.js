@@ -1,41 +1,31 @@
 async function main() {
-  const httpClient = require('ipfs-http-client')
+  var http = require("http");
 
-  // connect to the default API address http://localhost:5001
-  const ipfs = httpClient.create()
-  async function addFile(file_data) {
-    const cid = function (data) {
-      return ipfs
-        .add(data)
-        .then((cid) => {
-          return cid;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    const real_cid = cid(file_data)
-      .then((result) => {
-        return result;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    return real_cid;
-  }
 
-  const sendFileToNet = async (file) => {
-    return await addFile(file);
+  callback = function (response) {
+    var str = "";
+
+    //another chunk of data has been received, so append it to `str`
+    response.on("data", function (chunk) {
+      str += chunk;
+    });
+
+    //the whole response has been received, so we just print it out here
+    response.on("end", function () {
+      console.log(str);
+    });
+
+    response.on("error", function (err) {
+      console.log(err);
+    });
   };
-  async function getFile(cid) {
-      const data = Uint8ArrayConcat(await all)
-  }
-
-  const getFileFromNet = async (ipfs) => {
-    return await getFile("QmdxWocbtAV7uCTAQtJuTCgELWCM7anAZxmLgzQaptFAc1");
+  
+  var options = {
+    host: "localhost",
+    port: 8081,
+    path: "/ipfs/QmWEFSMku6yGLQ9TQr66HjSd9kay8ZDYKbBEfjNi4pLtrr/1",
   };
-  getFileFromNet(ipfs).then((r) => console.log(r));
-  module.exports = { sendFileToNet, getFileFromNet };
+  http.request(options, callback).end();
 }
 
 main();
