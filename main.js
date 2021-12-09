@@ -1,9 +1,6 @@
 var Web3 = require("web3");
 var http = require("http");
 const abi = require("./abis/cryptoadz.json");
-const { MerkleTree } = require("merkletreejs");
-const { strictEqual } = require("assert");
-const { Console } = require("console");
 
 const infuraEndpoint = `https://mainnet.infura.io/v3/7fd81eb359ea4252ba1d7e7b675be37f`;
 var web3 = new Web3(infuraEndpoint);
