@@ -55,23 +55,23 @@ const logOwners = async () => {
   }
 
   // // honorary members
-  // for (let i = 1000000; i <= 56000000; i += 1000000) {
-  //   var options = {
-  //     host: "localhost",
-  //     port: 8081,
-  //     path: "/ipfs/QmWEFSMku6yGLQ9TQr66HjSd9kay8ZDYKbBEfjNi4pLtrr/" + i,
-  //   };
-  //   const owner = await cryptoadzContract.methods.ownerOf(i).call();
-  //   if (onlyOwners.includes(owner)) {
-  //     const ownersIndex = onlyOwners.indexOf(owner);
-  //     ownersBalances[ownersIndex].tokenIds.push(i);
-  //   } else {
-  //     onlyOwners.push(owner);
-  //     ownersBalances.push({ owner: owner, tokenIds: [i] });
-  //   }
-  //   console.log("adding metadata");
-  //   http.request(options, retrieveMetaData).end();
-  // }
+  for (let i = 1000000; i <= 56000000; i += 1000000) {
+    var options = {
+      host: "localhost",
+      port: 8081,
+      path: "/ipfs/QmWEFSMku6yGLQ9TQr66HjSd9kay8ZDYKbBEfjNi4pLtrr/" + i,
+    };
+    const owner = await cryptoadzContract.methods.ownerOf(i).call();
+    if (onlyOwners.includes(owner)) {
+      const ownersIndex = onlyOwners.indexOf(owner);
+      ownersBalances[ownersIndex].tokenIds.push(i);
+    } else {
+      onlyOwners.push(owner);
+      ownersBalances.push({ owner: owner, tokenIds: [i] });
+    }
+    console.log("adding metadata");
+    http.request(options, retrieveMetaData).end();
+  }
 
   const fs = require("fs");
   // cryptoadz owners
